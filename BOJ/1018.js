@@ -2,38 +2,44 @@ const fs = require('fs');
 const filePath = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
 let input = fs.readFileSync(filePath).toString().split('\n');
 
-const NM = input[0].split(' ').map((item) => +item);
-const N = NM[0];
-const M = NM[1];
+let NM = input.shift().split(' ');
+let N = Number(NM.shift());
+let M = Number(NM.shift());
 
-const boardArr = Array.from(Array(N), () => new Array(M));
+let boardArr = [];
 for (let i = 0; i < N; i++) {
-  for (let j = 0; j < M; j++) {
-    boardArr[i][j] = input[i + 1].charAt(j);
-  }
+  boardArr[i] = input.shift().split('');
 }
 
 solution(N, M, boardArr);
 function solution(N, M, boardArr) {
-  const testCase = Array.from(Array(N), () => new Array(M));
+  let black = ['BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB'];
+  let white = ['WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW'];
   const rowCase = M - 7;
   const colCase = N - 7;
+  let minArr = [];
 
-  for (let i = 0; i < rowCase; i++) {
-    for (let j = 0; j < colCase; j++) {
-      find(rowCase, colCase);
+  for (let i = 0; i < colCase; i++) {
+    for (let j = 0; j < rowCase; j++) {
+      find(i, j);
     }
   }
 
-  function find(rowCase, colCase) {
-    const x = rowCase + 8;
-    const y = colCase + 8;
-    for (let i = rowCase; k < x; i++) {
-      for (let j = colCase; l < y; j++) {
-
+  function find(colCase, rowCase) {
+    let checkBlack = 0;
+    let checkWhite = 0;
+    for (let i = colCase; i < colCase + 8; i++) {
+      for (let j = rowCase; j < rowCase + 8; j++) {
+        if (boardArr[i][j] !== black[i - colCase][j - rowCase]) checkBlack++;
+        if (boardArr[i][j] !== white[i - colCase][j - rowCase]) checkWhite++;
       }
     }
+
+    let min = checkBlack < checkWhite ? checkBlack : checkWhite;
+    minArr.push(min);
   }
+
+  console.log(Math.min.apply(null, minArr));
 }
 
 /*let count = 0;
