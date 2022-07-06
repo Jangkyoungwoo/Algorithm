@@ -15,8 +15,8 @@ solution(N, M, testCaseArr);
 
 function solution(N, M, testCaseArr) {
   let max = 0;
-  for (let i = 0; i < N - 2; i++) {
-    for (let j = i + 1; j < N - 1; j++) {
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
       for (let k = j + 1; k < N; k++) {
         let sum = testCaseArr[i] + testCaseArr[j] + testCaseArr[k];
         if (sum <= M && sum > max) {
