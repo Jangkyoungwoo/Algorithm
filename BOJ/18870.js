@@ -13,7 +13,7 @@ function solution(N, input) {
 
   let dic = {};
   setSort.forEach((e, index) => { dic[e] = index });
-
+  console.log(dic);
   let result = '';
   for (let i = 0; i < N; i++) {
     result += dic[input[i]] + ' ';
